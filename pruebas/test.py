@@ -105,12 +105,11 @@
 # video_capture.release()
 # cv2.destroyAllWindows()
 
-import cv2
-import mediapipe as mp
-
-# Inicializa Face Mesh
-mp_face_mesh = mp.solutions.face_mesh
-mp_drawing = mp.solutions.drawing_utils
+import cv2 
+import mediapipe as mp 
+# Inicializa Face Mesh 
+mp_face_mesh = mp.solutions.face_mesh  # type: ignore
+mp_drawing = mp.solutions.drawing_utils # type: ignore
 
 cap = cv2.VideoCapture(2)
 
@@ -131,12 +130,12 @@ with mp_face_mesh.FaceMesh(
         results = face_mesh.process(rgb_frame)
 
         if results.multi_face_landmarks:
-            for face_landmarks in results.multi_face_landmarks:
+            for face_landmarks in results.multi_face_landmarks: 
                 # Dibuja la malla en la cara
                 mp_drawing.draw_landmarks(
                     frame, 
                     face_landmarks, 
-                    mp_face_mesh.FACEMESH_TESSELATION,  # toda la malla
+                    mp_face_mesh.FACEMESH_TESSELATION,
                     mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=1),
                     mp_drawing.DrawingSpec(color=(255, 0, 0), thickness=1)
                 )
@@ -148,3 +147,4 @@ with mp_face_mesh.FaceMesh(
 
 cap.release()
 cv2.destroyAllWindows()
+
