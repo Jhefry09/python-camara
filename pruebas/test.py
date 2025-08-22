@@ -77,30 +77,74 @@
 # cv2.destroyAllWindows()
 
 
+# import cv2
+# import face_recognition
+
+# video_capture = cv2.VideoCapture(2)
+
+# while True:
+#     ret, frame = video_capture.read()
+#     if not ret:
+#         break
+
+#     rgb_frame = frame[:, :, ::-1]
+
+#     face_landmarks_list = face_recognition.face_landmarks(rgb_frame)
+
+#     for face_landmarks in face_landmarks_list:
+#         for facial_feature in face_landmarks.keys():
+#             points = face_landmarks[facial_feature]
+#             for point in points:
+#                 cv2.circle(frame, point, 2, (0, 255, 0), 1)
+
+#     cv2.imshow("Video - Malla Facial", frame)
+
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+
+# video_capture.release()
+# cv2.destroyAllWindows()
+
 import cv2
-import face_recognition
+import mediapipe as mp
 
-video_capture = cv2.VideoCapture(2)
+# Inicializa Face Mesh
+mp_face_mesh = mp.solutions.face_mesh
+mp_drawing = mp.solutions.drawing_utils
 
-while True:
-    ret, frame = video_capture.read()
-    if not ret:
-        break
+cap = cv2.VideoCapture(2)
 
-    rgb_frame = frame[:, :, ::-1]
+with mp_face_mesh.FaceMesh(
+    max_num_faces=1, 
+    refine_landmarks=True, # activa landmarks extra en ojos/labios
+    min_detection_confidence=0.5, 
+    min_tracking_confidence=0.5
+) as face_mesh:
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    face_landmarks_list = face_recognition.face_landmarks(rgb_frame)
+        # Convierte a RGB
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = face_mesh.process(rgb_frame)
 
-    for face_landmarks in face_landmarks_list:
-        for facial_feature in face_landmarks.keys():
-            points = face_landmarks[facial_feature]
-            for point in points:
-                cv2.circle(frame, point, 0, (0, 255, 0), -1)
+        if results.multi_face_landmarks:
+            for face_landmarks in results.multi_face_landmarks:
+                # Dibuja la malla en la cara
+                mp_drawing.draw_landmarks(
+                    frame, 
+                    face_landmarks, 
+                    mp_face_mesh.FACEMESH_TESSELATION,  # toda la malla
+                    mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=1, circle_radius=1),
+                    mp_drawing.DrawingSpec(color=(255, 0, 0), thickness=1)
+                )
 
-    cv2.imshow("Video - Malla Facial", frame)
+        cv2.imshow("Malla Facial - Presiona Q para salir", frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
 
-video_capture.release()
+cap.release()
 cv2.destroyAllWindows()
