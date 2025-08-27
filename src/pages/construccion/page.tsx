@@ -1,4 +1,4 @@
-// src/pages/Construccion.tsx
+// src/pages/construccion/page.tsx
 const Construccion = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#dce7f0]">

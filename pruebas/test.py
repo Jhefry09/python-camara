@@ -8,7 +8,7 @@ mp_drawing = mp.solutions.drawing_utils  # type: ignore
 cap = cv2.VideoCapture(0)
 
 with mp_face_mesh.FaceMesh(
-    max_num_faces=1,
+    max_num_faces=5,
     refine_landmarks=True,  # activa landmarks extra en ojos/labios
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5,

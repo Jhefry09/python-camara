@@ -1,92 +1,124 @@
 
-// src/pages/login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { User, Lock } from "lucide-react";
+import { User, Lock, Loader2 } from "lucide-react";
+
+interface LoginResponse {
+  usuario?: string;
+  error?: string;
+  [key: string]: any;
+}
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [login, setLogin] = useState("");
+  const [pass, setPass] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [responseData, setResponseData] = useState<LoginResponse | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (!username || !password) {
-      setError("Por favor, complete todos los campos.");
-      return;
+    try {
+      const response = await fetch("http://localhost:8080/reactPrueba/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ login, pass }),
+      });
+
+      const data: LoginResponse = await response.json();
+      setResponseData(data);
+
+      if (data.error) {
+        setMensaje(data.error);
+      } else {
+        setMensaje(`✅ Bienvenido, ${data.usuario}!`);
+      }
+    } catch (error) {
+      setMensaje("⚠️ Error al conectar con el servidor");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-
-    setError("");
-    navigate("/construccion");
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#dce7f0]">
-      <div className="bg-[#dce7f0] shadow-md p-8 rounded-2xl w-96 text-center">
-        {/* Avatar */}
-        <div className="flex justify-center mb-6">
-          <div className="w-24 h-24 border-2 border-black rounded-full flex items-center justify-center">
-            <User size={50} strokeWidth={1.5} />
-          </div>
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center"
+    >
+      {/* Título */}
+      <h2 className="text-3xl font-bold mb-6 text-center text-[#192e63ff]">
+        Iniciar Sesión
+      </h2>
 
-        {/* Formulario */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <User className="absolute left-3 top-3 text-gray-600" />
-            <input
-              type="text"
-              placeholder="USUARIO"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full pl-10 pr-3 py-2 rounded-full border border-gray-400 bg-[#97c6d8] placeholder-gray-600 focus:outline-none"
-            />
-          </div>
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 text-gray-600" />
-            <input
-              type="password"
-              placeholder="CONTRASEÑA"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-10 pr-3 py-2 rounded-full border border-gray-400 bg-[#97c6d8] placeholder-gray-600 focus:outline-none"
-            />
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="remember" className="w-4 h-4" />
-            <label htmlFor="remember" className="text-sm text-gray-700">
-              RECORDAR SESIÓN
-            </label>
-          </div>
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <button
-            type="submit"
-            className="w-full py-2 rounded-full bg-[#2d9cdb] text-white font-bold shadow hover:bg-[#1b7cb9] transition"
-          >
-            INICIAR SESIÓN
-          </button>
-
-          <button
-            type="button"
-            className="w-full text-gray-600 font-medium mt-2"
-          >
-            CANCELAR
-          </button>
-        </form>
-
-        {/* Links */}
-        <div className="mt-6 text-sm text-gray-500 space-y-1">
-          <p className="cursor-pointer hover:underline">REGISTRARTE</p>
-          <p className="cursor-pointer hover:underline">OLVIDÉ MI CONTRASEÑA</p>
-        </div>
+      {/* Input Usuario */}
+      <div className="w-full relative mb-4">
+        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <input
+          id="login"
+          type="text"
+          placeholder="Usuario"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+          className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52c3e2ff]"
+          required
+        />
       </div>
-    </div>
+
+      {/* Input Contraseña */}
+      <div className="w-full relative mb-4">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <input
+          id="pass"
+          type="password"
+          placeholder="Contraseña"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52c3e2ff]"
+          required
+        />
+      </div>
+
+      {/* Botón */}
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full py-3 rounded-lg font-semibold text-white uppercase transition-all shadow-md ${
+          loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-[#52c3e2ff] hover:bg-[#192e63ff]"
+        }`}
+      >
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <Loader2 className="animate-spin" size={18} /> Cargando...
+          </span>
+        ) : (
+          "Entrar"
+        )}
+      </button>
+
+      {/* Mensaje */}
+      {mensaje && (
+        <p
+          className={`mt-4 text-center text-sm font-medium ${
+            mensaje.startsWith("✅") ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {mensaje}
+        </p>
+      )}
+
+      {/* Debug JSON */}
+      {responseData && (
+        <pre className="mt-4 p-3 bg-gray-100 rounded text-xs text-left overflow-x-auto w-full">
+          {JSON.stringify(responseData, null, 2)}
+        </pre>
+      )}
+    </form>
   );
 };
 
 export default Login;
+
