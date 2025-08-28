@@ -20,7 +20,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/reactPrueba/login", {
+      const response = await fetch("http://161.132.54.35:8080/reactPrueba/login", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ login, pass }),

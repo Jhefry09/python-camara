@@ -18,7 +18,6 @@ function Home() {
     navigate('/login'); // 👈 Navega a login/page.tsx
   };
 
-
   // Función para redirigir a la página de Construcción
   const handleRegistrarse = () => {
     navigate('/construccion'); // 👈 Navega a construccion/page.tsx
