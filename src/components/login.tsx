@@ -1,6 +1,5 @@
-
-import { useState } from "react";
-import { User, Lock, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import Head from "./head.tsx";
 
 interface LoginResponse {
   usuario?: string;
@@ -14,6 +13,10 @@ const Login = () => {
   const [mensaje, setMensaje] = useState("");
   const [responseData, setResponseData] = useState<LoginResponse | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (window as any).lucide?.createIcons();
+  }, [loading, mensaje]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,18 +46,19 @@ const Login = () => {
   };
 
   return (
+  <>
+    <Head/>
     <form
       onSubmit={handleSubmit}
       className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center"
     >
-      {/* Título */}
       <h2 className="text-3xl font-bold mb-6 text-center text-[#192e63ff]">
         Iniciar Sesión
       </h2>
 
-      {/* Input Usuario */}
       <div className="w-full relative mb-4">
-        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <i data-lucide="User" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+        <span>icono de prueba</span>
         <input
           id="login"
           type="text"
@@ -66,9 +70,8 @@ const Login = () => {
         />
       </div>
 
-      {/* Input Contraseña */}
       <div className="w-full relative mb-4">
-        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <i data-lucide="lock" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
         <input
           id="pass"
           type="password"
@@ -80,7 +83,6 @@ const Login = () => {
         />
       </div>
 
-      {/* Botón */}
       <button
         type="submit"
         disabled={loading}
@@ -92,14 +94,14 @@ const Login = () => {
       >
         {loading ? (
           <span className="flex items-center justify-center gap-2">
-            <Loader2 className="animate-spin" size={18} /> Cargando...
+            <i data-lucide="loader-2" className="animate-spin w-4 h-4"></i>
+            Cargando...
           </span>
         ) : (
           "Entrar"
         )}
       </button>
 
-      {/* Mensaje */}
       {mensaje && (
         <p
           className={`mt-4 text-center text-sm font-medium ${
@@ -110,13 +112,13 @@ const Login = () => {
         </p>
       )}
 
-      {/* Debug JSON */}
       {responseData && (
         <pre className="mt-4 p-3 bg-gray-100 rounded text-xs text-left overflow-x-auto w-full">
           {JSON.stringify(responseData, null, 2)}
         </pre>
       )}
     </form>
+  </>
   );
 };
 
