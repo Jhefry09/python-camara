@@ -1,17 +1,21 @@
+
 import { useEffect } from "react";
 
 export default function Head() {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/lucide@latest/dist/umd/lucide.min.js";
-    script.async = true;
-    document.head.appendChild(script);
-// hola
+    // Link de bootstrap icons
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href =
+      "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css";
+    document.head.appendChild(link);
+
+    // Limpieza al desmontar
     return () => {
-      document.head.removeChild(script);
+      document.head.removeChild(link);
     };
   }, []);
 
-  return null;
-  }
+  return null; // este componente solo carga scripts, no renderiza nada
+}
 

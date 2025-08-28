@@ -57,7 +57,7 @@ const Login = () => {
       </h2>
 
       <div className="w-full relative mb-4">
-        <i data-lucide="User" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+        <i className="bi bi-yin-yang"></i>
         <span>icono de prueba</span>
         <input
           id="login"
