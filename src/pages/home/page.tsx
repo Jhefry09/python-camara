@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const navigate = useNavigate();
+/*   const navigate = useNavigate(); */
   const [mensaje, setMensaje] = useState<string>('');
 
   const handleReconocimientoFacial = () => {
@@ -13,13 +13,13 @@ function Home() {
     }, 3000);
   };
 
-  const handleIniciarSesion = () => {
-    navigate('/login');
-  };
+  // const handleIniciarSesion = () => {
+  //   navigate('/login');
+  // };
 
-  const handleRegistrarse = () => {
-    navigate('/construccion');
-  };
+  // const handleRegistrarse = () => {
+  //   navigate('/construccion');
+  // };
 
   const containerStyle: React.CSSProperties = {
     display: 'flex',
