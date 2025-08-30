@@ -77,7 +77,7 @@ function Home() {
         <h1 style={titleStyle}>Tiendita de don pepe</h1>
         
         <img
-          src="/imagen/imagen.png"
+          src="../../../public/logo.png"
           alt="Una imagen de ejemplo"
           style={mainImageStyle}
         />
