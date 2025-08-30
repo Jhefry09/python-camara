@@ -1,4 +1,5 @@
 import React from 'react';
+import { Nanvar } from '../../components/nanvar'; "../../components/nanvar.tsx";
 
 const TestPage: React.FC = () => {
   const handleFacialClick = () => {
@@ -25,6 +26,8 @@ const TestPage: React.FC = () => {
         borderRadius: '10px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
       }}>
+
+    <Nanvar />
         <h1 style={{ color: '#333', marginBottom: '1.5rem' }}>
           Prueba de Botones
         </h1>
