@@ -1,14 +1,13 @@
 import "./page.css";
-
-export default function dashboard() {
- 
-const Dashboard = () => {
+import { Nanvar } from '../../components/nanvar';
+import React from 'react';
 
 
-
-  return(
-    <>
-    <div>hola mundo;</div>
-    </>
+const Dashboard: React.FC = () => {
+  return (
+    <div>
+    <Nanvar/>
+    </div>
   )
-}}
+}
+export default Dashboard;
