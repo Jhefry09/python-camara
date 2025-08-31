@@ -1,0 +1,488 @@
+/* Contenedor principal de la barra lateral con estilo futurista */
+.sidebar {
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 50%, #0a0a2a 100%); /* Gradiente oscuro azulado */
+    color: #00f3ff; /* Color de texto azul neón */
+    display: flex; /* Usa flexbox para layout */
+    flex-direction: column; /* Organiza los elementos en columna */
+    justify-content: space-between; /* Distribuye el espacio entre elementos */
+    padding: 1.2rem 0; /* Padding vertical */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Transición suave para animaciones */
+    position: fixed; /* Posición fija en la pantalla */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    z-index: 1000; /* Alto z-index para estar sobre otros elementos */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); /* Sombra azul neón */
+    border-right: 1px solid rgba(0, 243, 255, 0.3); /* Borde derecho con efecto de luz */
+    overflow: hidden; /* Oculta el contenido que se desborda */
+}
+
+/* Capa overlay con efecto de grid cyberpunk */
+.cyberpunk-overlay {
+    position: absolute; /* Posición absoluta dentro del sidebar */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    right: 0; /* Alineado a la derecha */
+    bottom: 0; /* Alineado abajo */
+    background: 
+        linear-gradient(transparent 50%, rgba(0, 243, 255, 0.03) 50%), /* Líneas horizontales */
+        linear-gradient(90deg, transparent 50%, rgba(255, 0, 255, 0.03) 50%); /* Líneas verticales */
+    background-size: 100% 6px, 6px 100%; /* Tamaño del patrón de grid */
+    pointer-events: none; /* Permite clics a través de la capa */
+    opacity: 0.4; /* Transparencia */
+    animation: grid-move 20s linear infinite; /* Animación de movimiento del grid */
+}
+
+/* Animación para el movimiento del grid overlay */
+@keyframes grid-move {
+    0% { background-position: 0 0, 0 0; } /* Posición inicial */
+    100% { background-position: 0 100%, 100% 0; } /* Posición final */
+}
+
+/* Estilo cuando la barra lateral está cerrada */
+.sidebar.closed {
+    width: 80px; /* Ancho reducido */
+    align-items: center; /* Centra los elementos horizontalmente */
+}
+
+/* Estilo cuando la barra lateral está abierta */
+.sidebar.open {
+    width: 260px; /* Ancho expandido */
+    align-items: stretch; /* Estira los elementos al ancho disponible */
+}
+
+/* Encabezado de la barra lateral */
+.sidebar-header {
+    display: flex; /* Layout flex para alinear elementos */
+    justify-content: space-between; /* Espacio entre título y botón */
+    align-items: center; /* Centra verticalmente */
+    padding: 0 1.3rem; /* Padding horizontal */
+    margin-bottom: 2rem; /* Margen inferior */
+    position: relative; /* Posición relativa para elementos hijos absolutos */
+    z-index: 2; /* Z-index para estar sobre el overlay */
+    min-height: 42px; /* Altura mínima */
+}
+
+/* Estilo del encabezado cuando la barra está cerrada */
+.sidebar.closed .sidebar-header {
+    justify-content: center; /* Centra el botón */
+    padding: 0; /* Sin padding */
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilo del título de la barra lateral */
+.sidebar-title {
+    font-weight: 700; /* Negrita */
+    font-size: 1.3rem; /* Tamaño de fuente */
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el texto que se desborda */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1.2px; /* Espaciado entre letras */
+    color: #00f3ff; /* Color azul neón */
+    text-shadow: 
+        0 0 8px #00f3ff, /* Sombra de texto con efecto de brillo */
+        0 0 16px #00f3ff,
+        0 0 24px #00f3ff;
+    transition: all 0.3s ease; /* Transición suave */
+    background: linear-gradient(45deg, #00f3ff, #00ff99); /* Gradiente de texto */
+    -webkit-background-clip: text; /* Clip de fondo para texto (Webkit) */
+    -webkit-text-fill-color: transparent; /* Texto transparente (Webkit) */
+    background-clip: text; /* Clip de fondo para texto */
+}
+
+/* Oculta el título cuando la barra está cerrada */
+.sidebar.closed .sidebar-title {
+    opacity: 0; /* Transparencia total */
+    width: 0; /* Sin ancho */
+    height: 0; /* Sin altura */
+    overflow: hidden; /* Oculta el contenido */
+}
+
+/* Estilo para texto con efecto glitch */
+.glitch-text {
+    position: relative; /* Posición relativa para elementos pseudo */
+    display: inline-block; /* Display inline-block */
+}
+
+/* Pseudoelementos para efecto glitch */
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text); /* Usa el atributo data-text como contenido */
+    position: absolute; /* Posición absoluta */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    opacity: 0; /* Inicialmente transparente */
+}
+
+/* Primer pseudoelemento para efecto glitch (parte superior) */
+.glitch-text::before {
+    color: #ff00ff; /* Color magenta */
+    animation: glitch-anim-1 2s infinite linear alternate-reverse; /* Animación de glitch */
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%); /* Recorta la parte superior */
+}
+
+/* Segundo pseudoelemento para efecto glitch (parte inferior) */
+.glitch-text::after {
+    color: #00ffcc; /* Color cian */
+    animation: glitch-anim-2 3s infinite linear alternate-reverse; /* Animación de glitch */
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%); /* Recorta la parte inferior */
+}
+
+/* Animación para el primer efecto glitch */
+@keyframes glitch-anim-1 {
+    0%, 5% { transform: translate(0); opacity: 0.7; } /* Posición normal con opacidad */
+    6%, 100% { transform: translate(-2px, 2px); opacity: 0; } /* Desplazamiento y desvanecimiento */
+}
+
+/* Animación para el segundo efecto glitch */
+@keyframes glitch-anim-2 {
+    0%, 10% { transform: translate(0); opacity: 0.7; } /* Posición normal con opacidad */
+    11%, 100% { transform: translate(2px, -2px); opacity: 0; } /* Desplazamiento y desvanecimiento */
+}
+
+/* Estilo del botón de toggle */
+.toggle-btn {
+    background: rgba(0, 243, 255, 0.15); /* Fondo semitransparente azul */
+    border: 1px solid rgba(0, 243, 255, 0.4); /* Borde azul */
+    color: #00f3ff; /* Color de icono azul */
+    font-size: 1.4rem; /* Tamaño de icono */
+    cursor: pointer; /* Cursor pointer */
+    border-radius: 10px; /* Bordes redondeados */
+    width: 42px; /* Ancho fijo */
+    height: 42px; /* Alto fijo */
+    display: flex; /* Flex para centrar icono */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    transition: all 0.3s ease; /* Transición suave */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
+    box-shadow: 
+        0 0 15px rgba(0, 243, 255, 0.4), /* Sombra exterior azul */
+        inset 0 0 10px rgba(255, 255, 255, 0.1); /* Sombra interior blanca */
+    position: relative; /* Posición relativa para pseudoelemento */
+    overflow: hidden; /* Oculta el exceso del pseudoelemento */
+}
+
+/* Pseudoelemento para efecto holográfico en el botón */
+.toggle-btn::before {
+    content: ''; /* Contenido vacío */
+    position: absolute; /* Posición absoluta */
+    top: -50%; /* Posicionado arriba */
+    left: -50%; /* Posicionado a la izquierda */
+    width: 200%; /* Ancho doble */
+    height: 200%; /* Alto doble */
+    background: linear-gradient(45deg, 
+        transparent, 
+        rgba(0, 243, 255, 0.2), 
+        rgba(255, 0, 255, 0.2), 
+        transparent); /* Gradiente diagonal */
+    transform: rotate(45deg); /* Rotación 45 grados */
+    animation: holographic-shine 3s linear infinite; /* Animación de brillo holográfico */
+}
+
+/* Animación para el efecto de brillo holográfico */
+@keyframes holographic-shine {
+    0% { transform: translate(-50%, -50%) rotate(45deg); } /* Posición inicial */
+    100% { transform: translate(50%, 50%) rotate(45deg); } /* Posición final */
+}
+
+/* Efecto hover del botón de toggle */
+.toggle-btn:hover {
+    background: rgba(0, 243, 255, 0.25); /* Fondo más opaco */
+    transform: scale(1.08); /* Escala ligeramente (sin rotación) */
+    box-shadow: 
+        0 0 25px rgba(0, 243, 255, 0.6), /* Sombra exterior más intensa */
+        inset 0 0 15px rgba(255, 255, 255, 0.2); /* Sombra interior más intensa */
+}
+
+/* Efecto hover en el pseudoelemento del botón */
+.toggle-btn:hover::before {
+    animation-duration: 1.5s; /* Acelera la animación al hacer hover */
+}
+
+/* Contenedor del menú de la barra lateral */
+.sidebar-menu {
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    display: flex; /* Flex para los ítems del menú */
+    flex-direction: column; /* Organiza los ítems en columna */
+    gap: 0.7rem; /* Espacio entre ítems */
+    padding: 0 1rem; /* Padding horizontal */
+    position: relative; /* Posición relativa */
+    z-index: 2; /* Z-index para estar sobre el overlay */
+}
+
+/* Estilo del menú cuando la barra está cerrada */
+.sidebar.closed .sidebar-menu {
+    align-items: center; /* Centra los ítems */
+    padding: 0; /* Sin padding */
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilo de cada ítem del menú */
+.menu-item {
+    display: flex; /* Flex para alinear icono y texto */
+    align-items: center; /* Centra verticalmente */
+    cursor: pointer; /* Cursor pointer */
+    white-space: nowrap; /* Evita salto de línea */
+    overflow: hidden; /* Oculta el exceso */
+    transition: all 0.3s ease; /* Transición suave */
+    border-radius: 8px; /* Bordes redondeados */
+    background: rgba(0, 243, 255, 0.08); /* Fondo semitransparente */
+    border: 1px solid transparent; /* Borde transparente */
+    position: relative; /* Posición relativa para elementos hijos */
+    min-height: 46px; /* Altura mínima */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+}
+
+/* Estilo de ítem del menú cuando la barra está cerrada */
+.sidebar.closed .menu-item {
+    justify-content: center; /* Centra el icono */
+    width: 56px; /* Ancho fijo */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 0.9rem 0; /* Padding vertical */
+}
+
+/* Estilo de ítem del menú cuando la barra está abierta */
+.sidebar.open .menu-item {
+    padding: 1.1rem 1.3rem; /* Padding interno */
+    justify-content: flex-start; /* Alinea a la izquierda */
+}
+
+/* Efecto hover en ítems del menú */
+.menu-item:hover {
+    background: rgba(0, 243, 255, 0.15); /* Fondo más opaco */
+    border: 1px solid rgba(0, 243, 255, 0.4); /* Borde visible */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); /* Sombra azul */
+    transform: translateX(5px); /* Desplazamiento a la derecha */
+}
+
+/* Efecto hover cuando la barra está cerrada */
+.sidebar.closed .menu-item:hover {
+    transform: scale(1.08); /* Escala ligeramente */
+}
+
+/* Estilo de ítem activo del menú */
+.menu-item.active {
+    background: rgba(0, 243, 255, 0.2); /* Fondo más opaco */
+    border: 1px solid rgba(0, 243, 255, 0.6); /* Borde más visible */
+    box-shadow: 
+        0 0 25px rgba(0, 243, 255, 0.4), /* Sombra exterior */
+        inset 0 0 10px rgba(255, 255, 255, 0.1); /* Sombra interior */
+}
+
+/* Indicador lateral para ítem activo */
+.menu-item.active::before {
+    content: ''; /* Contenido vacío */
+    position: absolute; /* Posición absoluta */
+    left: 0; /* Alineado a la izquierda */
+    top: 50%; /* Centrado verticalmente */
+    transform: translateY(-50%); /* Ajuste de centrado */
+    width: 4px; /* Ancho del indicador */
+    height: 60%; /* Altura del indicador */
+    background: linear-gradient(to bottom, #00f3ff, #00ff99); /* Gradiente vertical */
+    border-radius: 0 4px 4px 0; /* Bordes redondeados derecho */
+    box-shadow: 0 0 15px #00f3ff; /* Sombra de neón */
+    animation: pulse-glow 2s ease-in-out infinite alternate; /* Animación de pulso */
+}
+
+/* Animación de pulso para el indicador activo */
+@keyframes pulse-glow {
+    0% { opacity: 0.7; box-shadow: 0 0 10px #00f3ff; } /* Estado tenue */
+    100% { opacity: 1; box-shadow: 0 0 20px #00f3ff, 0 0 30px #00f3ff; } /* Estado brillante */
+}
+
+/* Contenedor de iconos del menú */
+.menu-icon-container {
+    position: relative; /* Posición relativa para punto de notificación */
+    display: flex; /* Flex para centrar icono */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    min-width: 28px; /* Ancho mínimo */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Sin margen derecho cuando la barra está cerrada */
+.sidebar.closed .menu-icon-container {
+    margin-right: 0;
+}
+
+/* Margen derecho cuando la barra está abierta */
+.sidebar.open .menu-icon-container {
+    margin-right: 1rem;
+}
+
+/* Estilo de iconos futuristas */
+.futuristic-icon {
+    font-size: 1.5rem; /* Tamaño de icono */
+    filter: 
+        drop-shadow(0 0 3px rgba(0, 243, 255, 0.8)) /* Sombra azul cercana */
+        drop-shadow(0 0 6px rgba(0, 243, 255, 0.4)); /* Sombra azul difusa */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en iconos */
+.menu-item:hover .futuristic-icon {
+    transform: scale(1.1); /* Escala ligeramente */
+    filter: 
+        drop-shadow(0 0 5px rgba(0, 243, 255, 1)) /* Sombra más intensa */
+        drop-shadow(0 0 10px rgba(0, 243, 255, 0.6)); /* Sombra más difusa */
+}
+
+/* Punto de notificación pulsante */
+.pulse-dot {
+    position: absolute; /* Posición absoluta dentro del contenedor */
+    top: -2px; /* Posicionado arriba */
+    right: -2px; /* Posicionado a la derecha */
+    width: 7px; /* Diámetro */
+    height: 7px; /* Diámetro */
+    background: #ff0055; /* Color rojo neón */
+    border-radius: 50%; /* Forma circular */
+    box-shadow: 0 0 12px #ff0055; /* Sombra roja */
+    animation: pulse-dot 1.5s ease-in-out infinite alternate; /* Animación de pulso */
+}
+
+/* Texto de los ítems del menú */
+.menu-text {
+    opacity: 0; /* Inicialmente transparente */
+    transition: all 0.3s ease; /* Transición suave */
+    font-weight: 500; /* Grosor de fuente */
+    font-size: 1rem; /* Tamaño de fuente */
+    letter-spacing: 0.4px; /* Espaciado entre letras */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    white-space: nowrap; /* Evita salto de línea */
+    overflow: hidden; /* Oculta exceso */
+    text-shadow: 0 0 5px rgba(0, 243, 255, 0.8); /* Sombra de texto azul */
+}
+
+/* Muestra el texto cuando la barra está abierta */
+.sidebar.open .menu-text {
+    opacity: 1; /* Opacidad completa */
+    width: auto; /* Ancho automático */
+}
+
+/* Pie de página de la barra lateral */
+.sidebar-footer {
+    padding: 1.1rem 0; /* Padding vertical */
+    border-top: 1px solid rgba(0, 243, 255, 0.25); /* Borde superior */
+    margin: 0 0.9rem; /* Margen horizontal */
+    position: relative; /* Posición relativa */
+    z-index: 2; /* Z-index para estar sobre el overlay */
+}
+
+/* Estilo del pie cuando la barra está cerrada */
+.sidebar.closed .sidebar-footer {
+    margin: 0; /* Sin margen */
+    padding: 1.1rem 0; /* Padding vertical */
+    display: flex; /* Flex para centrar */
+    justify-content: center; /* Centra horizontalmente */
+    width: 100%; /* Ancho completo */
+}
+
+/* Ítem del pie de página (usuario) */
+.footer-item {
+    display: flex; /* Flex para alinear icono y texto */
+    align-items: center; /* Centra verticalmente */
+    padding: 0.9rem 0.7rem; /* Padding interno */
+    white-space: nowrap; /* Evita salto de línea */
+    border-radius: 8px; /* Bordes redondeados */
+    transition: all 0.3s ease; /* Transición suave */
+    background: rgba(0, 243, 255, 0.08); /* Fondo semitransparente */
+    min-height: 46px; /* Altura mínima */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+}
+
+/* Estilo del ítem cuando la barra está cerrada */
+.sidebar.closed .footer-item {
+    justify-content: center; /* Centra el icono */
+    width: 56px; /* Ancho fijo */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 0.9rem 0.4rem; /* Padding interno */
+}
+
+/* Perfil de usuario - alineación */
+.user-profile {
+    align-items: center; /* Centra verticalmente */
+}
+
+/* Perfil de usuario cuando la barra está abierta */
+.sidebar.open .user-profile {
+    align-items: flex-start; /* Alinea arriba */
+}
+
+/* Información de usuario */
+.user-info {
+    display: flex; /* Flex para organizar texto */
+    flex-direction: column; /* Organiza en columna */
+    opacity: 0; /* Inicialmente transparente */
+    width: 0; /* Sin ancho */
+    overflow: hidden; /* Oculta exceso */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Muestra la información cuando la barra está abierta */
+.sidebar.open .user-info {
+    opacity: 1; /* Opacidad completa */
+    width: auto; /* Ancho automático */
+}
+
+/* Estado de conexión del usuario */
+.user-status {
+    font-size: 0.75rem; /* Tamaño de fuente pequeño */
+    color: #00ff99; /* Color verde neón */
+    text-shadow: 0 0 8px #00ff99; /* Sombra de texto verde */
+    margin-top: 0.15rem; /* Margen superior */
+    font-weight: 500; /* Grosor de fuente */
+}
+
+/* Efecto hover en el ítem del pie de página */
+.footer-item:hover {
+    background: rgba(0, 243, 255, 0.15); /* Fondo más opaco */
+    box-shadow: 0 0 18px rgba(0, 243, 255, 0.25); /* Sombra azul */
+}
+
+/* Efecto de línea de escaneo (como en películas de cyberpunk) */
+.sidebar::after {
+    content: ''; /* Contenido vacío */
+    position: absolute; /* Posición absoluta */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    right: 0; /* Alineado a la derecha */
+    height: 2px; /* Altura de la línea */
+    background: linear-gradient(90deg, 
+        transparent, 
+        #00f3ff, 
+        #ff00ff, 
+        #00f3ff, 
+        transparent); /* Gradiente de colores */
+    animation: scanline 3s linear infinite; /* Animación de escaneo */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5); /* Sombra de la línea */
+}
+
+/* Animación de la línea de escaneo */
+@keyframes scanline {
+    0% { top: 0; opacity: 0; } /* Inicio: arriba, transparente */
+    5% { opacity: 1; } /* Aparece rápidamente */
+    95% { opacity: 1; } /* Permanece visible */
+    100% { top: 100vh; opacity: 0; } /* Final: abajo, transparente */
+}
+
+/* Media query para dispositivos con ancho máximo de 768px */
+@media (max-width: 768px) {
+    .sidebar.open {
+        width: 220px; /* Ancho reducido para móviles */
+    }
+    
+    .sidebar.closed {
+        width: 65px; /* Ancho reducido para móviles */
+    }
+    
+    .sidebar-title {
+        font-size: 1.1rem; /* Tamaño de fuente reducido */
+    }
+    
+    .toggle-btn {
+        width: 38px; /* Ancho reducido */
+        height: 38px; /* Alto reducido */
+        font-size: 1.2rem; /* Tamaño de icono reducido */
+    }
+}

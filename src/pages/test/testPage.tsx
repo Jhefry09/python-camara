@@ -1,72 +1,34 @@
+// Importar React y el componente Nanvar
 import React from 'react';
-import { Nanvar } from '../../components/nanvar'; "../../components/nanvar.tsx";
+import { Nanvar } from '../../components/nanvar';
 
+// Definir el componente funcional TestPage
 const TestPage: React.FC = () => {
-  const handleFacialClick = () => {
-    console.log('Botón de Reconocimiento Facial clickeado');
-  };
-
-  const handleUserClick = () => {
-    console.log('Botón de Usuario y Contraseña clickeado');
-  };
-
   return (
-
+    // Contenedor principal con fondo gradiente
     <div style={{
-      backgroundColor: '#87CEEB',
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '20px'
+      backgroundColor: '#f0f8ff', // Color de fondo azul claro
+      backgroundImage: 'linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%)', // Gradiente suave
+      minHeight: '100vh', // Altura mínima de toda la ventana
+      display: 'flex', // Layout flex para organizar elementos
+      padding: '20px', // Espaciado interno
+      boxSizing: 'border-box' // Incluye padding en el tamaño total
     }}>
-     <Nanvar />     <div style={{
-        textAlign: 'center',
-        background: 'white',
-        padding: '2rem',
-        borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+      {/* Componente de barra lateral de navegación */}
+      <Nanvar />
+      
+      {/* Contenedor del contenido principal */}
+      <div style={{
+        flex: 1, // Ocupa todo el espacio disponible
+        marginLeft: '60px', // Margen para la barra lateral
+        transition: 'margin-left 0.3s ease-in-out' // Transición suave para cambios de margen
       }}>
-
-
-        <h1 style={{ color: '#333', marginBottom: '1.5rem' }}>
-          Prueba de Botones
-        </h1>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <button
-            onClick={handleFacialClick}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: '#3498db',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
-          >
-            Reconocimiento Facial
-          </button>
-          
-          <button
-            onClick={handleUserClick}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: '#e74c3c',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
-          >
-            Usuario y Contraseña
-          </button>
-        </div>
+        {/* Espacio reservado para contenido futuro */}
+        {/* Contenido principal eliminado */}
       </div>
     </div>
   );
 };
 
+// Exportar el componente como predeterminado
 export default TestPage;
