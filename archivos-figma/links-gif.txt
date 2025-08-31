@@ -1,0 +1,11 @@
+fondos:
+bienvenida:{
+https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXhvajY0ZjlwNXBtZGg4dmtuNTllbmljMzZuYmZ0Z2t4d3dsM2NmZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sZJE1DzZOadRLoXzxX/giphy.gif
+}
+
+
+
+
+dashboard de graficos:{
+https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdoY3k0MGl4MHE3dHduYndmMmVrbzczanQ5aXQ1cDg2aWIwZmdqdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MQTF1uW0GTZoVsseXx/giphy.gif
+}

@@ -1,0 +1,11 @@
+/* BORRA todo lo que hay en App.css y pega esto */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
