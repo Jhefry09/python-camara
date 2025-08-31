@@ -5,6 +5,7 @@ import Login from "./pages/login/page";
 import Construccion from "./pages/construccion/page";
 import TestPage from "./pages/test/testPage";
 import Registro from "./pages/registro/page";
+import Dashboard from "./pages/dashboard/page.tsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/construccion" element={<Construccion />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
