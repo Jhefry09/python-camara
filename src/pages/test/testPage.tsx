@@ -11,6 +11,7 @@ const TestPage: React.FC = () => {
   };
 
   return (
+
     <div style={{
       backgroundColor: '#87CEEB',
       minHeight: '100vh',
@@ -19,7 +20,7 @@ const TestPage: React.FC = () => {
       alignItems: 'center',
       padding: '20px'
     }}>
-      <div style={{
+     <Nanvar />     <div style={{
         textAlign: 'center',
         background: 'white',
         padding: '2rem',
@@ -27,7 +28,7 @@ const TestPage: React.FC = () => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
       }}>
 
-    <Nanvar />
+
         <h1 style={{ color: '#333', marginBottom: '1.5rem' }}>
           Prueba de Botones
         </h1>
