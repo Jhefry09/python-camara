@@ -1,126 +1,90 @@
-import { useState, useEffect } from "react";
-import Head from "./head.tsx";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
-interface LoginResponse {
-  usuario?: string;
-  error?: string;
-  [key: string]: any;
-}
-
-const Login = () => {
-  const [login, setLogin] = useState("");
-  const [pass, setPass] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [responseData, setResponseData] = useState<LoginResponse | null>(null);
-  const [loading, setLoading] = useState(false);
+export default function Login() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasCamera, setHasCamera] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    (window as any).lucide?.createIcons();
-  }, [loading, mensaje]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch("http://161.132.54.35:8080/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ login, pass }),
-      });
-
-      const data: LoginResponse = await response.json();
-      setResponseData(data);
-
-      if (data.error) {
-        setMensaje(data.error);
-      } else {
-        setMensaje(`✅ Bienvenido, ${data.usuario}!`);
+    const initCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+        setHasCamera(true);
+        setMessage("Escaneando rostro...");
+      } catch (err) {
+        console.error("Error al acceder a la cámara:", err);
+        setHasCamera(false);
+        setMessage("No se detectó cámara.");
       }
-    } catch (error) {
-      setMensaje("⚠️ Error al conectar con el servidor");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    initCamera();
+
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+        tracks.forEach((track) => track.stop());
+      }
+    };
+  }, []);
 
   return (
-  <>
-    <Head/>
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center"
+    <div
+      className="min-h-screen flex flex-col items-center justify-center relative font-[Orbitron] text-white"
+      style={{
+        backgroundImage: `url("https://media4.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <h2 className="text-3xl font-bold mb-6 text-center text-[#192e63ff]">
-        Iniciar Sesión
-      </h2>
+      {/* Overlay oscuro */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
-      <div className="w-full relative mb-4">
-        <i className="bi bi-yin-yang"></i>
-        <span>icono de prueba</span>
-        <input
-          id="login"
-          type="text"
-          placeholder="Usuario"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-          className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52c3e2ff]"
-          required
-        />
-      </div>
-
-      <div className="w-full relative mb-4">
-        <i data-lucide="lock" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
-        <input
-          id="pass"
-          type="password"
-          placeholder="Contraseña"
-          value={pass}
-          onChange={(e) => setPass(e.target.value)}
-          className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52c3e2ff]"
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className={`w-full py-3 rounded-lg font-semibold text-white uppercase transition-all shadow-md ${
-          loading
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-[#52c3e2ff] hover:bg-[#192e63ff]"
-        }`}
+      {/* Contenido */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center p-6 rounded-2xl bg-black/60 border border-cyan-500 shadow-[0_0_20px_rgba(0,255,255,0.6)]"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
       >
-        {loading ? (
-          <span className="flex items-center justify-center gap-2">
-            <i data-lucide="loader-2" className="animate-spin w-4 h-4"></i>
-            Cargando...
-          </span>
-        ) : (
-          "Entrar"
-        )}
-      </button>
-
-      {mensaje && (
-        <p
-          className={`mt-4 text-center text-sm font-medium ${
-            mensaje.startsWith("✅") ? "text-green-600" : "text-red-600"
-          }`}
+        <motion.h1
+          className="text-4xl font-bold text-cyan-400 drop-shadow-lg mb-6"
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {mensaje}
-        </p>
-      )}
+          Acceso Facial
+        </motion.h1>
 
-      {responseData && (
-        <pre className="mt-4 p-3 bg-gray-100 rounded text-xs text-left overflow-x-auto w-full">
-          {JSON.stringify(responseData, null, 2)}
-        </pre>
-      )}
-    </form>
-  </>
+        <div className="relative w-80 h-64 border-4 border-cyan-500 rounded-xl overflow-hidden shadow-lg">
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className="w-full h-full object-cover"
+          />
+          {!hasCamera && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-red-400 font-bold">
+              Cámara no disponible
+            </div>
+          )}
+        </div>
+
+        <motion.p
+          className="mt-6 text-cyan-300 animate-pulse text-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+        >
+          {message}
+        </motion.p>
+      </motion.div>
+    </div>
   );
-};
-
-export default Login;
+}
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-/*   const navigate = useNavigate(); */
+   const navigate = useNavigate(); 
   const [mensaje, setMensaje] = useState<string>('');
 
   const handleReconocimientoFacial = () => {
@@ -10,7 +10,9 @@ function Home() {
     // Aquí podrías agregar la lógica real para el reconocimiento facial
     setTimeout(() => {
       setMensaje('');
+      navigate('/login');
     }, 3000);
+    
   };
 
   // const handleIniciarSesion = () => {
@@ -121,5 +123,4 @@ function Home() {
 }
 
 export default Home;
-
 

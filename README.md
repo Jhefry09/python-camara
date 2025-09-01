@@ -67,3 +67,18 @@ export default tseslint.config([
   },
 ])
 ```
+
+### Lista de tecnologias usadas:
+- bun y npm para la instalacion de dependencias
+- react para la creacion de paginas
+- librerias usadas en react:
+    - react router dom 
+    - bootstrap icons
+    - rechart
+- vite para el hosting de la app
+- tailwind para decorar
+- java con spring boot para el backend
+- python para procesar imagenes
+- vps para montar la app en la nuve
+- podman para crear el contenedor con mysql
+-
