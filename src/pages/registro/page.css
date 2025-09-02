@@ -1,160 +1,186 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-}
 
-/* fondo */
-.page-container {
-  background: url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdoY3k0MGl4MHE3dHduYndmMmVrbzczanQ5aXQ1cDg2aWIwZmdqdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MQTF1uW0GTZoVsseXx/giphy.gif") no-repeat center center fixed;
-  background-size: cover;
+/* Fondo animado con gradiente futurista */
+.futuristic-bg {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  background-size: 400% 400%;
+  color: white;
+  font-family: "Orbitron", sans-serif;
   padding: 20px;
 }
 
-.page-flex {
+/* Contenedor en dos columnas */
+.registro-layout {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 50px;
-  flex-wrap: wrap; 
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
 }
 
-.div_car {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 220px;
-  height: 220px;
-  background: rgba(0, 123, 255, 0.2);
+/* Tarjeta glassmorphism */
+.registro-card {
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
   text-align: center;
+  width: 350px;
+  flex: 1;
 }
 
-.div_car:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+/* Título con glow */
+.title-glow {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00f5ff;
+  text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+  margin-bottom: 20px;
 }
 
-.div_car h2 {
+/* Inputs con estilo futurista */
+.input-glass {
+  width: 100%;
   margin: 10px 0;
-  color: #007bff;
-}
-
-.icono-car {
-  font-size: 50px;
-}
-
-.div_car button {
-  margin-top: 15px;
-  padding: 10px 20px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
-  border-radius: 20px;
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.div_car button:hover {
-  background: #0056b3;
-}
-
-/* FORMULARIO */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 300px;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  backdrop-filter: blur(5px);
-  align-items: center;
-}
-
-/* campos de texto */
-.form-container input,
-.form-container select,
-.form-container textarea {
-  width: 100%;
-  padding: 12px 15px;
-  border-radius: 15px;
-  border: 1px solid rgba(0,0,0,0.2);
   outline: none;
-  font-size: 15px;
-  transition: 0.3s;
-  background: #7ec8d3; 
-  box-sizing: border-box;
-}
-
-.form-container input:focus,
-.form-container select:focus,
-.form-container textarea:focus {
-  border-color: #a4dbe2;
-  box-shadow: 0 0 5px rgba(0,123,255,0.5);
-}
-
-
-
-.form-container select {
-  appearance: none;
-  cursor: pointer;
-}
-
-.form-container textarea {
-  resize: none;
-  min-height: 80px;
-}
-/* botones */
-.form-container .btn-primary,
-.form-container .btn-secondary {
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-  width: 100%;
-}
-
-.form-container .btn-primary {
-  background: #007bff;
+  background: rgba(255, 255, 255, 0.1);
   color: white;
+  font-size: 14px;
+  box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
 }
 
-.form-container .btn-primary:hover {
-  background: #0056b3;
+.input-glass::placeholder {
+  color: #aaa;
 }
 
-.form-container .btn-secondary {
-  background: transparent;
-  color: #555;
-  border: 1px solid #555;
+/* Botones futuristas */
+.btn-glow {
+  background: linear-gradient(45deg, #00f5ff, #8a2be2);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+  text-shadow: 0 0 10px #00f5ff;
 }
 
-.form-container .btn-secondary:hover {
-  background: #5a6268;
+.btn-glow:hover {
+  box-shadow: 0 0 20px #00f5ff, 0 0 40px #8a2be2;
+  transform: scale(1.05);
 }
 
-button:disabled {
-  background: #aaa !important;
-  color: #666 !important;
+.btn-glow.disabled {
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-@media (max-width: 700px) {
-  .page-flex {
+.btn-cancel {
+  background: transparent;
+  border: 2px solid #ff006e;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: #ff006e;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-cancel:hover {
+  background: #ff006e;
+  color: white;
+}
+
+/* Mensajes */
+.mensaje {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #00f5ff;
+  text-shadow: 0 0 10px #00f5ff;
+}
+
+/* Cámara futurista */
+.camera-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-glass {
+  border-radius: 12px;
+  border: 3px solid #00f5ff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn-capture {
+  margin-top: 15px;
+  background: linear-gradient(45deg, #00ff87, #0099ff);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  text-shadow: 0 0 10px #00ffea;
+}
+
+.btn-capture:hover {
+  box-shadow: 0 0 20px #00ff87, 0 0 40px #0099ff;
+  transform: scale(1.05);
+}
+
+/* Fondo con GIF */
+.background-gif {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdoY3k0MGl4MHE3dHduYndmMmVrbzczanQ5aXQ1cDg2aWIwZmdqdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MQTF1uW0GTZoVsseXx/giphy.gif")
+    no-repeat center center fixed;
+  background-size: cover;
+  z-index: -2;
+}
+
+/* Oscurecer un poco para que el texto sea legible */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
+}
+
+/* 📱 Responsive: en móviles cámara abajo */
+@media (max-width: 768px) {
+  .registro-layout {
     flex-direction: column;
     align-items: center;
   }
+
+  .registro-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .camera-container {
+    margin-top: 20px;
+  }
 }
+
