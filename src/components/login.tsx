@@ -109,7 +109,7 @@ export default function Login() {
   };
 
   return (
-    <div >
+    <div>
       <motion.div
         className="flex flex-col items-center justify-start gap-8 p-6 rounded-3xl border border-cyan-500 shadow-[0_0_50px_rgba(0,255,255,0.9)] bg-black/95"
         initial={{ opacity: 0, y: -50 }}
@@ -126,7 +126,37 @@ export default function Login() {
           {/* Panel de video */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative w-80 h-64 border-4 border-cyan-500 rounded-xl overflow-hidden shadow-[0_0_25px_rgba(0,255,255,0.7)]">
-              <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover"
+              />
+
+              {/* Overlay de escaneo animado */}
+              
+              
+
+{/* Overlay de escaneo animado */}
+
+{/* Overlay de escaneo animado */}
+<motion.div
+  className="absolute left-0 w-full h-2 
+bg-gradient-to-r from-transparent via-cyan-400 to-transparent 
+shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]
+"
+  initial={{ top: 0 }}
+  animate={{ top: "100%" }}
+  transition={{
+    duration: 2,
+    repeat: Infinity,
+    repeatType: "reverse",
+    ease: "linear",
+  }}
+/>
+
+              {/* Estado de cámara */}
               {!hasCamera && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-red-400 font-bold">
                   Cámara no disponible
@@ -154,7 +184,9 @@ export default function Login() {
             </motion.p>
 
             {sending && (
-              <motion.p className="text-yellow-300 mt-2 animate-pulse">Enviando datos...</motion.p>
+              <motion.p className="text-yellow-300 mt-2 animate-pulse">
+                Enviando datos...
+              </motion.p>
             )}
           </div>
 
@@ -171,8 +203,12 @@ export default function Login() {
                 alt="Rostro detectado"
                 className="w-40 h-40 object-cover rounded-xl border-2 border-cyan-400 shadow-[0_0_15px_rgba(0,255,255,0.7)]"
               />
-              <p className="text-pink-400 mt-2 font-bold text-lg text-center">{usuarioInfo.usuario}</p>
-              <p className="text-pink-300 text-sm text-center">{usuarioInfo.descripcion}</p>
+              <p className="text-pink-400 mt-2 font-bold text-lg text-center">
+                {usuarioInfo.usuario}
+              </p>
+              <p className="text-pink-300 text-sm text-center">
+                {usuarioInfo.descripcion}
+              </p>
               <button
                 className="mt-2 px-4 py-2 bg-pink-500 text-black rounded hover:bg-pink-400 transition"
                 onClick={() => leerDescripcion(usuarioInfo.descripcion)}

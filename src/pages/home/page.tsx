@@ -76,7 +76,7 @@ function Home() {
   return (
     <div style={backgroundStyle}>
       <div style={containerStyle}>
-        <h1 style={titleStyle}>Tiendita de don pepe</h1>
+        <h1 style={titleStyle}>Tienda de celulares</h1>
         
         <img
           src="../../../public/logo.png"
