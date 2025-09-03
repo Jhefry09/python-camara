@@ -1,68 +1,95 @@
-// Importar useState de React y los estilos CSS
-import { useState } from 'react';
-import './nanvar.css';
 
-// Componentes de íconos con estilo futurista usando símbolos Unicode
-const RecepIcon = () => <span className="futuristic-icon">⇛</span>; // Flecha derecha
-const TablaIcon = () => <span className="futuristic-icon">⊞</span>; // Cuadrado con plus
-const PrediccionIcon = () => <span className="futuristic-icon">⚲</span>; // Símbolo de anclaje/predicción
-const RegistroIcon = () => <span className="futuristic-icon">✉</span>; // Símbolo de correo/registro
-const UserIcon = () => <span className="futuristic-icon">☉</span>; // Símbolo de sol/usuario
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./nanvar.css";
 
-// Componente principal de la barra de navegación
+// Íconos futuristas
+const RecepIcon = () => <span className="futuristic-icon">⇛</span>;
+const TablaIcon = () => <span className="futuristic-icon">⊞</span>;
+const PrediccionIcon = () => <span className="futuristic-icon">⚲</span>;
+const RegistroIcon = () => <span className="futuristic-icon">✉</span>;
+const UserIcon = () => <span className="futuristic-icon">☉</span>;
+
 export const Nanvar = () => {
-    // Estado para controlar si la barra lateral está abierta o cerrada
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // Estado para controlar qué ítem del menú está activo
-    const [activeItem, setActiveItem] = useState('');
+    const [activeItem, setActiveItem] = useState("");
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    // Función para alternar (abrir/cerrar) la barra lateral
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+    // Cambiar ítem activo según la ruta actual
+    useEffect(() => {
+        switch (location.pathname) {
+            case "/dashboard":
+                setActiveItem("TABLA");
+                break;
+          case "/prediccion":
+                setActiveItem("PREDICCIÓN");
+                break;
+            case "/registro":
+                setActiveItem("REGISTRO");
+                break;
+            default:
+                setActiveItem("");
+        }
+    }, [location]);
 
-    // Función para manejar el clic en un ítem del menú
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     const handleItemClick = (itemName: string) => {
         setActiveItem(itemName);
-        // Aquí puedes agregar la lógica de navegación si es necesario
+        switch (itemName) {
+            case "TABLA":
+                navigate("/dashboard");
+                break;
+            case "PREDICCIÓN":
+                navigate("/prediccion");
+                break;
+            case "REGISTRO":
+                navigate("/registro");
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleLogout = () => {
+        // Limpiar datos de sesión
+        localStorage.clear();
+        sessionStorage.clear();
+        // Redirigir al login
+        navigate("/login");
     };
 
     return (
-        // Contenedor principal de la barra lateral con clases condicionales
-        <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
-            {/* Capa de overlay con efecto cyberpunk */}
+        <div className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
             <div className="cyberpunk-overlay"></div>
-            
-            {/* Encabezado de la barra lateral */}
+
+            {/* Header */}
             <div className="sidebar-header">
-                {/* Título con efecto glitch */}
-                <span className="sidebar-title glitch-text" data-text="RECEPCIÓN">RECEPCIÓN</span>
-                {/* Botón para alternar la barra lateral */}
+                <span className="sidebar-title glitch-text" data-text="RECEPCIÓN">
+                    MENU
+                </span>
                 <button onClick={toggleSidebar} className="toggle-btn holographic-btn">
                     <RecepIcon />
                 </button>
             </div>
-            
-            {/* Menú de la barra lateral */}
+
+            {/* Menú */}
             <div className="sidebar-menu">
-                {/* Ítem del menú - TABLA */}
-                <div 
-                    className={`menu-item ${activeItem === 'TABLA' ? 'active' : ''}`}
-                    onClick={() => handleItemClick('TABLA')}
+                <div
+                    className={`menu-item ${activeItem === "TABLA" ? "active" : ""}`}
+                    onClick={() => handleItemClick("TABLA")}
                 >
                     <div className="menu-icon-container">
                         <TablaIcon />
-                        {/* Punto de pulso indicador (posible notificación) */}
                         <span className="pulse-dot"></span>
                     </div>
-                    {/* Texto del menú que solo se muestra cuando está abierto */}
                     {isSidebarOpen && <span className="menu-text">TABLA</span>}
                 </div>
-                
-                {/* Ítem del menú - PREDICCIÓN */}
-                <div 
-                    className={`menu-item ${activeItem === 'PREDICCIÓN' ? 'active' : ''}`}
-                    onClick={() => handleItemClick('PREDICCIÓN')}
+
+                <div
+                    className={`menu-item ${activeItem === "PREDICCIÓN" ? "active" : ""}`}
+                    onClick={() => handleItemClick("PREDICCIÓN")}
                 >
                     <div className="menu-icon-container">
                         <PrediccionIcon />
@@ -70,11 +97,10 @@ export const Nanvar = () => {
                     </div>
                     {isSidebarOpen && <span className="menu-text">PREDICCIÓN</span>}
                 </div>
-                
-                {/* Ítem del menú - REGISTRO */}
-                <div 
-                    className={`menu-item ${activeItem === 'REGISTRO' ? 'active' : ''}`}
-                    onClick={() => handleItemClick('REGISTRO')}
+
+                <div
+                    className={`menu-item ${activeItem === "REGISTRO" ? "active" : ""}`}
+                    onClick={() => handleItemClick("REGISTRO")}
                 >
                     <div className="menu-icon-container">
                         <RegistroIcon />
@@ -83,24 +109,28 @@ export const Nanvar = () => {
                     {isSidebarOpen && <span className="menu-text">REGISTRO</span>}
                 </div>
             </div>
-            
-            {/* Pie de página de la barra lateral */}
+
+            {/* Footer / Logout */}
             <div className="sidebar-footer">
-                {/* Información de usuario */}
-                <div className="footer-item user-profile">
-                    <div className="menu-icon-container">
-                        <UserIcon />
-                    </div>
-                    {/* Información que solo se muestra cuando la barra está abierta */}
-                    {isSidebarOpen && (
-                        <div className="user-info">
-                            <span className="menu-text">USUARIO</span>
-                            {/* Estado de conexión del usuario */}
-                            <span className="user-status">En línea</span>
-                        </div>
-                    )}
-                </div>
+                
+              <div
+                  className="footer-item user-profile logout-btn"
+                  onClick={handleLogout}
+                  style={{ cursor: "pointer" }}
+              >
+                  <div className="menu-icon-container">
+                      <UserIcon />
+                  </div>
+                  {isSidebarOpen && (
+                      <div className="user-info">
+                          <span className="menu-text">Cerrar sesión</span>
+                          <span className="user-status">En línea</span>
+                      </div>
+                  )}
+              </div>
+
             </div>
         </div>
     );
 };
+

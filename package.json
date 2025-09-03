@@ -1,3 +1,4 @@
+
 {
   "name": "reconocimiento_facial",
   "private": true,
@@ -10,8 +11,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tensorflow-models/face-landmarks-detection": "^1.0.6",
+    "@tensorflow/tfjs": "^4.22.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.542.0",
+    "ml-regression-multivariate-linear": "^2.0.4",
+    "papaparse": "^5.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2",
@@ -20,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@tailwindcss/postcss": "^4.1.12",
+    "@types/papaparse": "^5.3.16",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
@@ -35,3 +41,4 @@
     "vite": "^7.1.2"
   }
 }
+

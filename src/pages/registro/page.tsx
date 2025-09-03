@@ -59,10 +59,10 @@ export default function Registro() {
 
         const data = await response.json();
         if (response.ok && data.success) {
-          setMensaje(`✅ ${data.mensaje || "Usuario registrado con éxito"}`);
+          setMensaje(`${data.mensaje || "Usuario registrado con éxito"}`);
           handleCancelar();
         } else {
-          setMensaje(`❌ ${data.mensaje || "Error al registrar"}`);
+          setMensaje(`${data.mensaje || "Error al registrar"}`);
         }
       } catch {
         setMensaje("⚠️ Error de conexión con el servidor");

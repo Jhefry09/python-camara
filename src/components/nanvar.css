@@ -486,3 +486,25 @@
         font-size: 1.2rem; /* Tamaño de icono reducido */
     }
 }
+
+/* Efecto cyberpunk parpadeante en el icono de logout */
+.logout-btn .menu-icon-container {
+    transition: 0.3s all ease-in-out;
+}
+
+/* Hover: parpadeo rojo */
+.logout-btn:hover .menu-icon-container {
+    animation: blink-red 0.8s infinite;
+}
+
+/* Keyframes del parpadeo */
+@keyframes blink-red {
+    0%, 50%, 100% {
+        color: inherit; /* color normal */
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    }
+    25%, 75% {
+        color: #ff0000; /* rojo brillante */
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    }
+}
