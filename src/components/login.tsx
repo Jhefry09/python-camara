@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -25,7 +24,9 @@ export default function Login() {
   useEffect(() => {
     const initCamera = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
         if (videoRef.current) videoRef.current.srcObject = stream;
         setHasCamera(true);
         setMessage("Escaneando rostro...");
@@ -51,7 +52,9 @@ export default function Login() {
     const utter = new SpeechSynthesisUtterance(texto);
     utter.lang = "es-ES";
     const voces = window.speechSynthesis.getVoices();
-    const lucia = voces.find(v => v.name.toLowerCase().includes("lucia") && v.lang.includes("es"));
+    const lucia = voces.find(
+      (v) => v.name.toLowerCase().includes("lucia") && v.lang.includes("es"),
+    );
     if (lucia) utter.voice = lucia;
     utter.rate = 1;
     utter.pitch = 1.1;
@@ -71,7 +74,7 @@ export default function Login() {
     ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
     const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob((b) => resolve(b), "image/jpeg")
+      canvas.toBlob((b) => resolve(b), "image/jpeg"),
     );
     if (!blob) return;
 
@@ -79,7 +82,10 @@ export default function Login() {
     formData.append("foto", blob, "rostro.jpg");
 
     try {
-      const res = await fetch("http://localhost:8080/enviarFoto", { method: "POST", body: formData });
+      const res = await fetch("http://localhost:8080/enviarFoto", {
+        method: "POST",
+        body: formData,
+      });
       const data: ResultadoDTO = await res.json();
       setRostroDetectado(data.encontrado);
 
@@ -91,7 +97,7 @@ export default function Login() {
 
         setTimeout(() => {
           window.location.href = "/dashboard";
-        }, 5000);
+        }, 2000);
       } else {
         const errorMsg = data.mensaje || "Rostro no detectado";
         setMessage(`${errorMsg} - Reintentando...`);
@@ -135,26 +141,21 @@ export default function Login() {
               />
 
               {/* Overlay de escaneo animado */}
-              
-              
 
-{/* Overlay de escaneo animado */}
+              {/* Overlay de escaneo animado */}
 
-{/* Overlay de escaneo animado */}
-<motion.div
-  className="absolute left-0 w-full h-2 
-bg-gradient-to-r from-transparent via-cyan-400 to-transparent 
-shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]
-"
-  initial={{ top: 0 }}
-  animate={{ top: "100%" }}
-  transition={{
-    duration: 2,
-    repeat: Infinity,
-    repeatType: "reverse",
-    ease: "linear",
-  }}
-/>
+              {/* Overlay de escaneo animado */}
+              <motion.div
+                className="absolute left-0 w-full h-2 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]"
+                initial={{ top: 0 }}
+                animate={{ top: "100%" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "linear",
+                }}
+              />
 
               {/* Estado de cámara */}
               {!hasCamera && (
@@ -169,8 +170,8 @@ shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]
                 rostroDetectado === null
                   ? "text-cyan-300"
                   : rostroDetectado
-                  ? "text-green-400"
-                  : "text-red-400"
+                    ? "text-green-400"
+                    : "text-red-400"
               }`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -179,8 +180,8 @@ shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]
               {rostroDetectado === null
                 ? message
                 : rostroDetectado
-                ? "Rostro detectado ✅"
-                : "Rostro no detectado ❌"}
+                  ? "Rostro detectado ✅"
+                  : "Rostro no detectado ❌"}
             </motion.p>
 
             {sending && (
@@ -222,4 +223,3 @@ shadow-[0_0_20px_#22d3ee,0_0_40px_#22d3ee]
     </div>
   );
 }
-
