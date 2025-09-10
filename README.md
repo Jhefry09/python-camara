@@ -75,10 +75,14 @@ export default tseslint.config([
     - react router dom 
     - bootstrap icons
     - rechart
+    - tailwind
 - vite para el hosting de la app
 - tailwind para decorar
 - java con spring boot para el backend
-- python para procesar imagenes
+- python para procesar imagenes:
+    - face_recognition
+    - json
+    - base64
 - vps para montar la app en la nuve
 - podman para crear el contenedor con mysql
 -
